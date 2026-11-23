@@ -2,6 +2,7 @@ import { Router } from "express";
 import rateLimit from "express-rate-limit";
 import type { OrderStatus } from "@prisma/client";
 import { ordersService } from "../services/orders.service";
+import { ordersExportService } from "../services/orders-export.service";
 import { requireAdmin } from "../lib/auth";
 import type { AuthUser } from "../lib/auth";
 import type { CheckoutPayload } from "../types";
@@ -37,6 +38,29 @@ router.get("/confirmation/:orderNumber", async (req, res) => {
     return;
   }
   res.json(order);
+});
+
+router.get("/export/excel", requireAdmin, async (req, res) => {
+  try {
+    const buffer = await ordersExportService.exportExcel({
+      status: req.query.status as OrderStatus | undefined,
+      query: req.query.q as string | undefined,
+      pendingTajir: req.query.pendingTajir === "1",
+    });
+
+    const stamp = new Date().toISOString().slice(0, 10);
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    );
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="orders_export_${stamp}.xlsx"`,
+    );
+    res.send(buffer);
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : "EXPORT_FAILED" });
+  }
 });
 
 router.get("/", requireAdmin, async (req, res) => {
