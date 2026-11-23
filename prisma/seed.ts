@@ -4,9 +4,9 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = (process.env.SEED_ADMIN_EMAIL ?? "admin@ghazala.store").toLowerCase();
+  const email = (process.env.SEED_ADMIN_EMAIL ?? "admin@soukly.ma").toLowerCase();
   const password = process.env.SEED_ADMIN_PASSWORD ?? "ChangeMeAdmin123!";
-  const name = process.env.SEED_ADMIN_NAME ?? "Store Admin";
+  const name = process.env.SEED_ADMIN_NAME ?? "Soukly Admin";
 
   const passwordHash = await bcrypt.hash(password, 12);
 
@@ -25,18 +25,18 @@ async function main() {
   await prisma.storeSettings.deleteMany();
   await prisma.storeSettings.create({
     data: {
-      storeName: "Ghazala Store",
-      description: "Boutique d'affiliation COD au Maroc — produits sélectionnés via Tajir COD.",
+      storeName: "Soukly",
+      description: "Soukly — boutique marocaine COD. Produits utiles livrés partout au Maroc.",
       phone: "+212600000000",
       whatsapp: "+212600000000",
-      email: "contact@ghazala.store",
+      email: "contact@soukly.ma",
       currency: "MAD",
       defaultLocale: "fr",
       tajirCodUrl: "https://tajir.ma",
-      heroTitle: "Des produits utiles, livrés partout au Maroc",
-      heroSubtitle: "Commandez en ligne, payez à la livraison. Confirmation téléphonique avant expédition.",
+      heroTitle: "Votre souk en ligne, livré partout au Maroc",
+      heroSubtitle: "Commandez simplement, payez à la livraison. Confirmation téléphonique avant l'envoi.",
       promoBannerText: "Livraison COD disponible dans toutes les grandes villes",
-      seoTitle: "Ghazala Store | Achat COD Maroc",
+      seoTitle: "Soukly | Achat COD Maroc",
       seoDescription: "Boutique e-commerce COD au Maroc. Paiement à la livraison, suivi manuel Tajir COD.",
     },
   });
@@ -173,7 +173,7 @@ async function main() {
       isFeatured: true,
       isPopular: true,
       isOnSale: true,
-      seoTitle: "Collagen Hair | Ghazala Store",
+      seoTitle: "Collagen Hair | Soukly",
       seoDescription: "Soin collagène pour cheveux — commande COD Maroc",
       images: {
         create: [

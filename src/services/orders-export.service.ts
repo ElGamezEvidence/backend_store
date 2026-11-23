@@ -94,7 +94,7 @@ export class OrdersExportService {
     });
 
     const workbook = new ExcelJS.Workbook();
-    workbook.creator = "Ghazala Store";
+    workbook.creator = "Soukly";
     workbook.created = new Date();
 
     const sheet = workbook.addWorksheet("orders");

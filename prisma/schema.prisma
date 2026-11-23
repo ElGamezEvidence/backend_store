@@ -106,7 +106,7 @@ model VerificationToken {
 
 model StoreSettings {
   id              String   @id @default(cuid())
-  storeName       String   @default("Ghazala Store")
+  storeName       String   @default("Soukly")
   logoUrl         String?
   faviconUrl      String?
   description     String?  @db.Text
