@@ -10,6 +10,7 @@ async function main() {
     email: "issamgamez17@gmail.com",
     phone: "+212610364897",
     whatsapp: "+212610364897",
+    heroImageUrl: "/hero-soukly.jpg",
     heroTitle: "Votre souk en ligne, livré partout au Maroc",
     heroSubtitle:
       "Commandez simplement, payez à la livraison. Confirmation téléphonique avant l'envoi.",
