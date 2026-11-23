@@ -12,9 +12,21 @@ export function createApp() {
   const app = express();
 
   app.use(helmet());
+  const allowedOrigins = env.corsOrigin
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
   app.use(
     cors({
-      origin: env.corsOrigin.split(",").map((s) => s.trim()),
+      origin(origin, callback) {
+        if (!origin) return callback(null, true);
+        const ok =
+          allowedOrigins.includes(origin) ||
+          /\.pages\.dev$/i.test(origin) ||
+          /\.workers\.dev$/i.test(origin);
+        return callback(null, ok);
+      },
       credentials: true,
     }),
   );
