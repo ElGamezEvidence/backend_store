@@ -18,7 +18,7 @@ export function createApp() {
       credentials: true,
     }),
   );
-  app.use(express.json({ limit: "2mb" }));
+  app.use(express.json({ limit: "8mb" }));
   app.use(morgan(env.nodeEnv === "production" ? "combined" : "dev"));
 
   app.get("/health", (_req, res) => {

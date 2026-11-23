@@ -13,6 +13,7 @@ export const env = {
   corsOrigin: [
     ...(process.env.CORS_ORIGIN ?? "http://localhost:3000").split(","),
     "https://myfrontstor.netlify.app",
+    "https://yoursouk.netlify.app",
     "http://localhost:3000",
   ]
     .map((s) => s.trim())

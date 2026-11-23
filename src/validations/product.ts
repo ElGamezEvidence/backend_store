@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+const imageUrlSchema = z
+  .string()
+  .min(1)
+  .refine(
+    (v) => v.startsWith("data:image/") || /^https?:\/\//i.test(v),
+    "Invalid image URL",
+  );
+
 export const productVariantSchema = z.object({
   id: z.string().cuid().optional(),
   name: z.string().trim().min(1).max(120),
@@ -9,7 +17,15 @@ export const productVariantSchema = z.object({
   stockQuantity: z.number().int().min(0).optional().nullable(),
   isAvailable: z.boolean().default(true),
   attributes: z.record(z.string()).optional().nullable(),
-  imageUrl: z.string().url().optional().nullable().or(z.literal("")),
+  imageUrl: z
+    .string()
+    .optional()
+    .nullable()
+    .or(z.literal(""))
+    .refine(
+      (v) => !v || v.startsWith("data:image/") || /^https?:\/\//i.test(v),
+      "Invalid image URL",
+    ),
   sortOrder: z.number().int().default(0),
 });
 
@@ -38,7 +54,7 @@ export const productSchema = z.object({
   images: z
     .array(
       z.object({
-        url: z.string().url(),
+        url: imageUrlSchema,
         alt: z.string().optional().nullable(),
         sortOrder: z.number().int().default(0),
         isPrimary: z.boolean().default(false),
