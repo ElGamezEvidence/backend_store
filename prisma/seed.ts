@@ -33,6 +33,7 @@ async function main() {
       currency: "MAD",
       defaultLocale: "fr",
       tajirCodUrl: "https://tajir.ma",
+      heroImageUrl: "/hero-soukly.jpg",
       heroTitle: "Votre souk en ligne, livré partout au Maroc",
       heroSubtitle: "Commandez simplement, payez à la livraison. Confirmation téléphonique avant l'envoi.",
       promoBannerText: "Livraison COD disponible dans toutes les grandes villes",
