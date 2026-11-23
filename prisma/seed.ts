@@ -27,9 +27,9 @@ async function main() {
     data: {
       storeName: "Soukly",
       description: "Soukly — boutique marocaine COD. Produits utiles livrés partout au Maroc.",
-      phone: "+212600000000",
-      whatsapp: "+212600000000",
-      email: "contact@soukly.ma",
+      phone: "+212610364897",
+      whatsapp: "+212610364897",
+      email: "issamgamez17@gmail.com",
       currency: "MAD",
       defaultLocale: "fr",
       tajirCodUrl: "https://tajir.ma",

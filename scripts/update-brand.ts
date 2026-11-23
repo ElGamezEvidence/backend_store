@@ -7,7 +7,9 @@ async function main() {
   const data = {
     storeName: "Soukly",
     description: "Soukly — boutique marocaine COD. Produits utiles livrés partout au Maroc.",
-    email: "contact@soukly.ma",
+    email: "issamgamez17@gmail.com",
+    phone: "+212610364897",
+    whatsapp: "+212610364897",
     heroTitle: "Votre souk en ligne, livré partout au Maroc",
     heroSubtitle:
       "Commandez simplement, payez à la livraison. Confirmation téléphonique avant l'envoi.",
