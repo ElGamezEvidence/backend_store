@@ -3,6 +3,6 @@ import { env } from "./lib/env";
 
 const app = createApp();
 
-app.listen(env.port, () => {
-  console.log(`backend_store listening on http://localhost:${env.port}`);
+app.listen(env.port, "0.0.0.0", () => {
+  console.log(`backend_store listening on 0.0.0.0:${env.port}`);
 });

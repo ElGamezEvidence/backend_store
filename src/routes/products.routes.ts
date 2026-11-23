@@ -1,13 +1,14 @@
 import { Router } from "express";
 import { productsService } from "../services/products.service";
 import { requireAdmin } from "../lib/auth";
+import { param, queryString } from "../lib/params";
 import { productSchema } from "../validations/product";
 
 const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const wantsAll = req.query.status === "all";
+    const wantsAll = queryString(req, "status") === "all";
     if (wantsAll) {
       const header = req.headers.authorization;
       if (!header?.startsWith("Bearer ")) {
@@ -18,14 +19,14 @@ router.get("/", async (req, res) => {
 
     const result = await productsService.list({
       status: wantsAll ? undefined : "ACTIVE",
-      query: req.query.q as string | undefined,
-      categorySlug: req.query.category as string | undefined,
-      featured: req.query.featured === "1",
-      popular: req.query.popular === "1",
-      onSale: req.query.onSale === "1",
-      page: Number(req.query.page || 1),
-      pageSize: Number(req.query.pageSize || 12),
-      sort: (req.query.sort as never) || "newest",
+      query: queryString(req, "q"),
+      categorySlug: queryString(req, "category"),
+      featured: queryString(req, "featured") === "1",
+      popular: queryString(req, "popular") === "1",
+      onSale: queryString(req, "onSale") === "1",
+      page: Number(queryString(req, "page") || 1),
+      pageSize: Number(queryString(req, "pageSize") || 12),
+      sort: (queryString(req, "sort") as never) || "newest",
     });
 
     if (wantsAll) {
@@ -41,7 +42,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/slug/:slug", async (req, res) => {
-  const product = await productsService.getBySlug(req.params.slug);
+  const product = await productsService.getBySlug(param(req, "slug"));
   if (!product || product.status !== "ACTIVE") {
     res.status(404).json({ error: "NOT_FOUND" });
     return;
@@ -50,7 +51,7 @@ router.get("/slug/:slug", async (req, res) => {
 });
 
 router.get("/:id", requireAdmin, async (req, res) => {
-  const product = await productsService.getById(req.params.id);
+  const product = await productsService.getById(param(req, "id"));
   if (!product) {
     res.status(404).json({ error: "NOT_FOUND" });
     return;
@@ -71,7 +72,7 @@ router.post("/", requireAdmin, async (req, res) => {
 router.put("/:id", requireAdmin, async (req, res) => {
   try {
     const data = productSchema.parse(req.body);
-    const product = await productsService.update(req.params.id, data);
+    const product = await productsService.update(param(req, "id"), data);
     res.json(product);
   } catch (error) {
     res.status(400).json({ error: error instanceof Error ? error.message : "ERROR" });
@@ -79,7 +80,7 @@ router.put("/:id", requireAdmin, async (req, res) => {
 });
 
 router.delete("/:id", requireAdmin, async (req, res) => {
-  await productsService.archive(req.params.id);
+  await productsService.archive(param(req, "id"));
   res.json({ ok: true });
 });
 

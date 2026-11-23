@@ -84,8 +84,9 @@ router.get("/reviews", requireAdmin, async (_req, res) => {
 });
 
 router.patch("/reviews/:id", requireAdmin, async (req, res) => {
+  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
   const review = await prisma.review.update({
-    where: { id: req.params.id },
+    where: { id },
     data: {
       status: req.body.status,
       moderatedAt: new Date(),
