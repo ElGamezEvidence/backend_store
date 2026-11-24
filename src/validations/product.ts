@@ -61,7 +61,12 @@ export const productSchema = z.object({
       }),
     )
     .default([]),
-  variants: z.array(productVariantSchema).default([]),
+  variants: z
+    .array(productVariantSchema)
+    .default([])
+    .transform((list) =>
+      list.filter((v) => v.name.trim().length > 0 && v.sku.trim().length > 0),
+    ),
 });
 
 export type ProductFormValues = z.infer<typeof productSchema>;
