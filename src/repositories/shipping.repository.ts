@@ -18,6 +18,15 @@ export class ShippingRepository {
     });
   }
 
+  findZoneByCity(city: string) {
+    return prisma.shippingZone.findFirst({
+      where: {
+        isActive: true,
+        city: { equals: city, mode: "insensitive" },
+      },
+    });
+  }
+
   listMethods(activeOnly = true) {
     return prisma.shippingMethod.findMany({
       where: activeOnly ? { isActive: true } : undefined,

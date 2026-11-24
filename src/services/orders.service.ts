@@ -105,8 +105,9 @@ export class OrdersService {
     }
 
     const subtotal = roundMoney(resolvedItems.reduce((sum, i) => sum + i.lineTotal, 0));
+    const region = data.region?.trim() || "Maroc";
     const shipping = await shippingService.calculateFee(
-      data.region,
+      region,
       data.city,
       data.shippingType as ShippingType,
     );
@@ -143,7 +144,7 @@ export class OrdersService {
       await tx.address.create({
         data: {
           customerId: customer.id,
-          region: data.region,
+          region,
           city: data.city,
           addressLine: data.addressLine,
           postalCode: data.postalCode || null,
@@ -161,7 +162,7 @@ export class OrdersService {
           customerName: data.fullName,
           customerPhone: data.phone,
           customerPhone2: data.phoneSecondary || null,
-          region: data.region,
+          region,
           city: data.city,
           addressLine: data.addressLine,
           postalCode: data.postalCode || null,
