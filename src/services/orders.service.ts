@@ -4,6 +4,7 @@ import { decimalFrom, roundMoney, toNumber } from "../lib/money";
 import { ordersRepository } from "../repositories/orders.repository";
 import { shippingService } from "./shipping.service";
 import { tajirManualService } from "./tajir-manual.service";
+import { notifyService } from "./notify.service";
 import type { CheckoutPayload, OrderListFilters } from "../types";
 import { checkoutSchema } from "../validations/checkout";
 
@@ -201,6 +202,22 @@ export class OrdersService {
           customer: true,
           shippingMethod: true,
         },
+      });
+
+      notifyService.notifyNewOrder({
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        customerPhone: order.customerPhone,
+        city: order.city,
+        addressLine: order.addressLine,
+        total: toNumber(order.total),
+        currency: order.currency,
+        items: order.items.map((item) => ({
+          name: item.variantName
+            ? `${item.productName} (${item.variantName})`
+            : item.productName,
+          quantity: item.quantity,
+        })),
       });
 
       return order;
