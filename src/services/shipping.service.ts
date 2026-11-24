@@ -2,8 +2,8 @@ import type { ShippingType } from "@prisma/client";
 import { toNumber } from "../lib/money";
 import { shippingRepository } from "../repositories/shipping.repository";
 
-const DEFAULT_HOME_FEE = 35;
-const DEFAULT_PICKUP_FEE = 30;
+const DEFAULT_HOME_FEE = 0;
+const DEFAULT_PICKUP_FEE = 0;
 
 export class ShippingService {
   listZones() {
